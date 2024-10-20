@@ -1,0 +1,15 @@
+{
+  "name": "dev.goreng.events",
+  "version": "0.0.1",
+  "displayName": "Event Framework",
+  "description": "Easily manage events between objects",
+  "unity": "2022.3",
+  "unityRelease": "7f1",
+  "dependencies": {},
+  "author": {
+    "name": "Jason Meulenhoff",
+    "email": "nasi@goreng.dev",
+    "url": "https://packages.goreng.dev"
+  },
+  "hideInEditor": false
+}
