@@ -5,10 +5,10 @@
         private readonly EventContainer<T> _container;
         public IEventListener<T> listener { get; }
         
-        public BaseEventProducer()
+        public BaseEventProducer(bool repeat = false)
         {
             _container = new EventContainer<T>();
-            listener = new BaseEventListener<T>(_container);
+            listener = new BaseEventListener<T>(_container, repeat);
         }
 
         public void Publish(T data)
