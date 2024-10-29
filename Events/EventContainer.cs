@@ -10,7 +10,7 @@ namespace Framework.Events
         {
             lastState = data;
         }
-        
+
         public EventContainer()
         {
             publisher += SaveState;
