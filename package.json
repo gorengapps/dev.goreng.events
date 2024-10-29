@@ -1,6 +1,6 @@
 {
   "name": "dev.goreng.events",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "displayName": "Event Framework",
   "description": "Easily manage events between objects",
   "unity": "2022.3",
