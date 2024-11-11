@@ -11,9 +11,9 @@
             listener = new BaseEventListener<T>(_container, repeat);
         }
 
-        public void Publish(T data)
+        public void Publish(object sender, T data)
         {
-            _container.publisher?.Invoke(this, data);
+            _container.publisher?.Invoke(sender, data);
         }
     }
 }
