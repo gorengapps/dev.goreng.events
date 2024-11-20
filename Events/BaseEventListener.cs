@@ -4,10 +4,10 @@ namespace Framework.Events
 {
     public class BaseEventListener<T> : IEventListener<T>
     {
-        private readonly EventContainer<T> _container;
+        private readonly IEventContainer<T> _container;
         private readonly bool _repeat;
         
-        internal BaseEventListener(EventContainer<T> container, bool repeat)
+        internal BaseEventListener(IEventContainer<T> container, bool repeat)
         {
             _container = container;
             _repeat = repeat;
