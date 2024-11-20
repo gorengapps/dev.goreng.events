@@ -2,7 +2,8 @@
 {
     public class BaseEventProducer<T> : IEventProducer<T>
     {
-        private readonly EventContainer<T> _container;
+        private readonly IEventContainer<T> _container;
+        public IStateRetainer<T> state => _container;
         public IEventListener<T> listener { get; }
         
         public BaseEventProducer(bool repeat = false)

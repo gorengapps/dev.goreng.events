@@ -2,7 +2,7 @@
 
 namespace Framework.Events
 {
-    internal class EventContainer<T>
+    public class EventContainer<T>: IEventContainer<T>
     { 
         public T lastState { get; private set; }
         
@@ -21,6 +21,6 @@ namespace Framework.Events
             publisher -= SaveState;
         }
         
-        public EventHandler<T> publisher;
+        public EventHandler<T> publisher { get; set; }
     }
 }
