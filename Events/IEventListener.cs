@@ -4,6 +4,7 @@ namespace Framework.Events
 {
     public interface IEventListener<T>
     {
-        event EventHandler<T> Subscribe;
+        public IDisposable Subscribe(EventHandler<T> handler);
+        public void Unsubscribe(EventHandler<T> handler);
     }
 }
