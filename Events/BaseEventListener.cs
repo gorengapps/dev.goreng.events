@@ -6,25 +6,28 @@ namespace Framework.Events
     {
         private readonly IEventContainer<T> _container;
         private readonly bool _repeat;
-        
-        internal BaseEventListener(IEventContainer<T> container, bool repeat)
+
+        public BaseEventListener(IEventContainer<T> container, bool repeat)
         {
             _container = container;
             _repeat = repeat;
         }
-        
-        public event EventHandler<T> Subscribe
-        {
-            add
-            {
-                _container.publisher += value;
 
-                if (_container.lastState != null && _repeat)
-                {
-                    value.Invoke(null, _container.lastState);
-                }
+        public IDisposable Subscribe(EventHandler<T> handler)
+        {
+            _container.publisher += handler;
+            
+            if (_container.lastState != null && _repeat)
+            {
+                _container.publisher.Invoke(this, _container.lastState);
             }
-            remove => _container.publisher -= value;
+            
+            return new EventSubscription<T>(this, handler);
+        }
+
+        public void Unsubscribe(EventHandler<T> handler)
+        {
+            _container.publisher -= handler;
         }
     }
 }
