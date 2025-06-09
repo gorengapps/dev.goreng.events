@@ -19,7 +19,7 @@ namespace Framework.Events
             
             if (_container.lastState != null && _repeat)
             {
-                _container.publisher.Invoke(this, _container.lastState);
+                handler.Invoke(this, _container.lastState);
             }
             
             return new EventSubscription<T>(this, handler);
