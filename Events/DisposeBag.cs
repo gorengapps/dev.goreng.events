@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace Framework.Events
 {
     /// <summary>
     /// A container for managing multiple <see cref="IDisposable"/> instances, disposing them all when this bag is disposed.
+    /// It also manages a <see cref="CancellationTokenSource"/> that is cancelled and disposed upon the bag's disposal.
     /// </summary>
     public class DisposeBag : IDisposable
     {
@@ -15,9 +17,27 @@ namespace Framework.Events
         private readonly List<IDisposable> _disposables = new List<IDisposable>();
         
         /// <summary>
+        /// The cancellation token source that is managed by this bag.
+        /// </summary>
+        private readonly CancellationTokenSource _cancellationTokenSource;
+        
+        /// <summary>
         /// Indicates whether this <see cref="DisposeBag"/> has already been disposed.
         /// </summary>
         private bool _isDisposed;
+
+        /// <summary>
+        /// Gets the <see cref="CancellationToken"/> associated with this bag.
+        /// The token will be cancelled when the bag is disposed.
+        /// </summary>
+        public CancellationTokenSource token => _cancellationTokenSource;
+
+        public DisposeBag()
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+            // Add the source to the list of disposables so it's disposed with the bag.
+            _disposables.Add(_cancellationTokenSource);
+        }
         
         /// <summary>
         /// Adds an <see cref="IDisposable"/> instance to the bag.
@@ -39,7 +59,7 @@ namespace Framework.Events
         }
         
         /// <summary>
-        /// Disposes all <see cref="IDisposable"/> instances in the bag.
+        /// Cancels the token and disposes all <see cref="IDisposable"/> instances in the bag.
         /// </summary>
         /// <remarks>
         /// Calling Dispose multiple times has no additional effect.
@@ -52,7 +72,11 @@ namespace Framework.Events
             }
 
             _isDisposed = true;
+
+            // First, cancel the token to signal any async operations to stop.
+            _cancellationTokenSource.Cancel();
             
+            // Now, dispose all items, including the CancellationTokenSource itself.
             foreach (var disposable in _disposables)
             {
                 try
