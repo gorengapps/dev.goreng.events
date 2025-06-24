@@ -7,7 +7,7 @@ namespace Framework.Events
     /// with integrated state retention and listener management.
     /// </summary>
     /// <typeparam name="T">The type of data produced by this event producer.</typeparam>
-    public class BaseEventProducer<T> : : IDisposableEventProducer<T>
+    public class BaseEventProducer<T> : IDisposableEventProducer<T>
     {
         /// <summary>
         /// Signals if the producer was already disposed
