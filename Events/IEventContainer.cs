@@ -6,7 +6,7 @@ namespace Framework.Events
     /// Interface for an event container that combines state retention with event publishing capabilities.
     /// </summary>
     /// <typeparam name="T">The type of data handled by the event container.</typeparam>
-    public interface IEventContainer<T>: IStateRetainer<T>
+    public interface IEventContainer<T>: IStateRetainer<T>, IDisposable
     {
         /// <summary>
         /// Gets or sets the event handler that publishes events of type T.

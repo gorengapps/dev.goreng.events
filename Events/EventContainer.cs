@@ -7,13 +7,14 @@ namespace Framework.Events
     /// Automatically saves the state of each published event.
     /// </summary>
     /// <typeparam name="T">The type of data handled by the event container.</typeparam>
-    public class EventContainer<T>: IEventContainer<T>
+    public class EventContainer<T>: IEventContainer<T>, IDisposable
     { 
         /// <summary>
         /// Gets the last state that was published through this container.
         /// </summary>
         /// <value>The most recent data published, or the default value of T if nothing has been published.</value>
         public T lastState { get; private set; }
+        private bool _disposed;
         
         /// <summary>
         /// Saves the state when an event is published.
@@ -35,12 +36,15 @@ namespace Framework.Events
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="EventContainer{T}"/> class.
-        /// Unsubscribes from the publisher to prevent memory leaks.
+        /// Disposes of the current subscription
         /// </summary>
-        ~EventContainer()
+        public void Dispose()
         {
-            publisher -= SaveState;
+            if (!_disposed)
+            {
+                publisher -= SaveState;
+                _disposed = true;
+            }
         }
         
         /// <summary>

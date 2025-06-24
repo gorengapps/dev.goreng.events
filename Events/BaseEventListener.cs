@@ -26,7 +26,7 @@ namespace Framework.Events
         /// <param name="repeat">If true, new subscribers will immediately receive the last state when they subscribe.</param>
         public BaseEventListener(IEventContainer<T> container, bool repeat)
         {
-            _container = container;
+            _container = container ?? throw new ArgumentNullException(nameof(container));
             _repeat = repeat;
         }
 
@@ -40,6 +40,8 @@ namespace Framework.Events
         /// </remarks>
         public IDisposable Subscribe(EventHandler<T> handler)
         {
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+            
             _container.publisher += handler;
             
             if (_container.lastState != null && _repeat)
@@ -56,6 +58,8 @@ namespace Framework.Events
         /// <param name="handler">The event handler to unsubscribe.</param>
         public void Unsubscribe(EventHandler<T> handler)
         {
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+            
             _container.publisher -= handler;
         }
     }

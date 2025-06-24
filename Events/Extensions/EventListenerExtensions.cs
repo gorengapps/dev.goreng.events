@@ -1,7 +1,7 @@
 ﻿using System;
 using Framework.Events;
 
-namespace Extensions
+namespace Framework.Events.Extensions
 {
     public static class EventListenerExtensions
     {
@@ -34,6 +34,20 @@ namespace Extensions
                 var transformedData = transform(data);
                 target.Publish(obj, transformedData);
             });
+        }
+        
+        /// <summary>
+        /// Combines the latest values of two event listeners into a single event stream.
+        /// The combined stream will only start publishing once both sources have published at least one value.
+        /// </summary>
+        /// <typeparam name="T1">The type of the first event source.</typeparam>
+        /// <typeparam name="T2">The type of the second event source.</typeparam>
+        /// <param name="source1">The first event listener.</param>
+        /// <param name="source2">The second event listener.</param>
+        /// <returns>A disposable event listener that publishes tuples of the latest values from both sources.</returns>
+        public static IDisposableEventListener<(T1, T2)> CombineLatest<T1, T2>(this IEventListener<T1> source1, IEventListener<T2> source2)
+        {
+            return new CombineLatestEventListener<T1, T2>(source1, source2);
         }
     }
 }

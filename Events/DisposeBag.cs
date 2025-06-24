@@ -7,7 +7,7 @@ namespace Framework.Events
 {
     /// <summary>
     /// A container for managing multiple <see cref="IDisposable"/> instances, disposing them all when this bag is disposed.
-    /// It also manages a <see cref="CancellationTokenSource"/> that is cancelled and disposed upon the bag's disposal.
+    /// It also manages a <see cref="cancellationTokenSource"/> that is cancelled and disposed upon the bag's disposal.
     /// </summary>
     public class DisposeBag : IDisposable
     {
@@ -27,10 +27,10 @@ namespace Framework.Events
         private bool _isDisposed;
 
         /// <summary>
-        /// Gets the <see cref="CancellationToken"/> associated with this bag.
-        /// The token will be cancelled when the bag is disposed.
+        /// Gets the <see cref="cancellationTokenSource"/> associated with this bag.
+        /// The token source will be cancelled when the bag is disposed.
         /// </summary>
-        public CancellationTokenSource token => _cancellationTokenSource;
+        public CancellationTokenSource cancellationTokenSource => _cancellationTokenSource;
 
         public DisposeBag()
         {
@@ -48,6 +48,8 @@ namespace Framework.Events
         /// </remarks>
         public void Add(IDisposable disposable)
         {
+            if (disposable == null) throw new ArgumentNullException(nameof(disposable));
+            
             if (_isDisposed)
             {
                 // If already disposed, dispose the item immediately to maintain consistency.

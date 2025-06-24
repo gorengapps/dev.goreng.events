@@ -1,12 +1,19 @@
-﻿namespace Framework.Events
+﻿using System;
+
+namespace Framework.Events
 {
     /// <summary>
     /// A base implementation of <see cref="IEventProducer{T}"/> that provides event production capabilities
     /// with integrated state retention and listener management.
     /// </summary>
     /// <typeparam name="T">The type of data produced by this event producer.</typeparam>
-    public class BaseEventProducer<T> : IEventProducer<T>
+    public class BaseEventProducer<T> : IDisposableEventProducer<T>
     {
+        /// <summary>
+        /// Signals if the producer was already disposed
+        /// </summary>
+        private bool _disposed;
+    
         /// <summary>
         /// The internal event container that manages events and state.
         /// </summary>
@@ -43,6 +50,15 @@
         public void Publish(object sender, T data)
         {
             _container.publisher?.Invoke(sender, data);
+        }
+
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _container.Dispose();
+                _disposed = true;
+            }
         }
     }
 }
