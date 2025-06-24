@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEngine;
 
 namespace Framework.Events
 {
@@ -86,9 +87,8 @@ namespace Framework.Events
                 }
                 catch (Exception ex)
                 {
-                    // Log disposal errors to console instead of Unity-specific Debug.LogError
-                    // In a Unity context, this could be wrapped to use Debug.LogError instead
-                    System.Console.WriteLine($"Error disposing object of type {disposable.GetType()}: {ex}");
+                    // Optionally log or handle exceptions from disposal of individual items
+                    Debug.LogError($"Error disposing object of type {disposable.GetType()}: {ex}");
                 }
             }
 
