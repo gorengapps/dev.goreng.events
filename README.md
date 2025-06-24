@@ -311,6 +311,17 @@ Add disposable to a DisposeBag for automatic cleanup.
 subscription.AddToDisposables(disposeBag);
 ```
 
+#### `CombineLatest<T1, T2>(source2)`
+Combines the latest values of two event listeners into a single event stream.
+
+```csharp
+var combined = source1.CombineLatest(source2);
+combined.Subscribe((sender, data) => {
+    var (value1, value2) = data;
+    Debug.Log($"Combined: {value1}, {value2}");
+});
+```
+
 ## Best Practices
 
 1. **Always use DisposeBag** for automatic cleanup in MonoBehaviours
