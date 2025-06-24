@@ -15,11 +15,6 @@ namespace Framework.Events
         {
             publisher += SaveState;
         }
-
-        ~EventContainer()
-        {
-            publisher -= SaveState;
-        }
         
         public EventHandler<T> publisher { get; set; }
     }

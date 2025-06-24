@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using UnityEngine;
 
 namespace Framework.Events
 {
@@ -27,10 +26,10 @@ namespace Framework.Events
         private bool _isDisposed;
 
         /// <summary>
-        /// Gets the <see cref="CancellationToken"/> associated with this bag.
-        /// The token will be cancelled when the bag is disposed.
+        /// Gets the <see cref="CancellationTokenSource"/> associated with this bag.
+        /// The token source will be cancelled when the bag is disposed.
         /// </summary>
-        public CancellationTokenSource token => _cancellationTokenSource;
+        public CancellationTokenSource CancellationTokenSource => _cancellationTokenSource;
 
         public DisposeBag()
         {
@@ -48,6 +47,8 @@ namespace Framework.Events
         /// </remarks>
         public void Add(IDisposable disposable)
         {
+            if (disposable == null) throw new ArgumentNullException(nameof(disposable));
+            
             if (_isDisposed)
             {
                 // If already disposed, dispose the item immediately to maintain consistency.
@@ -85,8 +86,9 @@ namespace Framework.Events
                 }
                 catch (Exception ex)
                 {
-                    // Optionally log or handle exceptions from disposal of individual items
-                    Debug.LogError($"Error disposing object of type {disposable.GetType()}: {ex}");
+                    // Log disposal errors to console instead of Unity-specific Debug.LogError
+                    // In a Unity context, this could be wrapped to use Debug.LogError instead
+                    System.Console.WriteLine($"Error disposing object of type {disposable.GetType()}: {ex}");
                 }
             }
 

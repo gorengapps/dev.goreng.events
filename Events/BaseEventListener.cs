@@ -9,7 +9,7 @@ namespace Framework.Events
 
         public BaseEventListener(IEventContainer<T> container, bool repeat)
         {
-            _container = container;
+            _container = container ?? throw new ArgumentNullException(nameof(container));
             _repeat = repeat;
         }
 

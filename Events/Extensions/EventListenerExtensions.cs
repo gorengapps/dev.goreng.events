@@ -1,7 +1,7 @@
 ﻿using System;
 using Framework.Events;
 
-namespace Extensions
+namespace Framework.Events.Extensions
 {
     public static class EventListenerExtensions
     {

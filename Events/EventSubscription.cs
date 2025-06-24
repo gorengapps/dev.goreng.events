@@ -9,8 +9,8 @@ namespace Framework.Events
 
         public EventSubscription(IEventListener<TEvent> listener, EventHandler<TEvent> handler)
         {
-            _listener = listener;
-            _handler = handler;
+            _listener = listener ?? throw new ArgumentNullException(nameof(listener));
+            _handler = handler ?? throw new ArgumentNullException(nameof(handler));
         }
 
         public void Dispose()
