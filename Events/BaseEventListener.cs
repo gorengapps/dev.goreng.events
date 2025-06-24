@@ -15,6 +15,8 @@ namespace Framework.Events
 
         public IDisposable Subscribe(EventHandler<T> handler)
         {
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+            
             _container.publisher += handler;
             
             if (_container.lastState != null && _repeat)
@@ -27,6 +29,8 @@ namespace Framework.Events
 
         public void Unsubscribe(EventHandler<T> handler)
         {
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+            
             _container.publisher -= handler;
         }
     }
