@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Framework.Events
+﻿namespace Framework.Events
 {
     /// <summary>
     /// A base implementation of <see cref="IEventProducer{T}"/> that provides event production capabilities

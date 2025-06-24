@@ -27,11 +27,16 @@ namespace Framework.Events
         private bool _isDisposed;
 
         /// <summary>
-        /// Gets the <see cref="cancellationTokenSource"/> associated with this bag.
+        /// Gets the <see cref="CancellationTokenSource"/> associated with this bag.
         /// The token source will be cancelled when the bag is disposed.
         /// </summary>
+        /// <value>The cancellation token source managed by this bag.</value>
         public CancellationTokenSource cancellationTokenSource => _cancellationTokenSource;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisposeBag"/> class.
+        /// Creates a new cancellation token source that will be cancelled upon disposal.
+        /// </summary>
         public DisposeBag()
         {
             _cancellationTokenSource = new CancellationTokenSource();
